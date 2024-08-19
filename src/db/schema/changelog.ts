@@ -38,8 +38,7 @@ export const changelog = pgTable(
       .notNull(),
   },
   (changelog) => ({
-    uniqueIndex: uniqueIndex("title_unique").on(changelog.title),
-    userIdIndex: index("prompts_user_id_idx").on(changelog.authorId),
+    uniqueIndex: uniqueIndex("unique_changelog_title").on(changelog.title),
   }),
 );
 

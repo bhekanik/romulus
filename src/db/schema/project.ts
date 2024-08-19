@@ -15,7 +15,10 @@ import { category } from "./category";
 import { feedback } from "./feedback";
 import { organization } from "./organization";
 
-export const projectStatusEnum = pgEnum("status", ["active", "archived"]);
+export const projectStatusEnum = pgEnum("project_status", [
+  "active",
+  "archived",
+]);
 
 export const project = pgTable(
   "project",
@@ -34,6 +37,7 @@ export const project = pgTable(
     categoryId: integer("category_id").references(() => category.id, {
       onDelete: "no action",
     }),
+    status: projectStatusEnum("status").notNull().default("active"),
     title: varchar("title").notNull(),
     imageUrl: varchar("image_url"),
     description: text("description").notNull(),
@@ -45,11 +49,7 @@ export const project = pgTable(
       .notNull(),
   },
   (project) => ({
-    uniqueIndex: uniqueIndex("title_unique").on(
-      project.title,
-      project.creatorId,
-    ),
-    userIdIndex: index("prompts_user_id_idx").on(project.creatorId),
+    uniqueIndex: uniqueIndex("unique_project_title").on(project.title),
   }),
 );
 

@@ -14,7 +14,7 @@ import { pgEnum } from "drizzle-orm/pg-core";
 import { category } from "./category";
 import { project } from "./project";
 
-export const feedbackStatusEnum = pgEnum("status", [
+export const feedbackStatusEnum = pgEnum("feedback_status", [
   "new",
   "under_review",
   "planned",
@@ -45,7 +45,7 @@ export const feedback = pgTable(
     imageUrl: varchar("image_url"),
     description: text("description").notNull(),
     votes: integer("votes").notNull().default(0),
-    role: feedbackStatusEnum("status").notNull().default("new"),
+    status: feedbackStatusEnum("status").notNull().default("new"),
     createdAt: timestamp("created_at")
       .$default(() => new Date())
       .notNull(),
@@ -54,9 +54,8 @@ export const feedback = pgTable(
       .notNull(),
   },
   (feedback) => ({
-    uniqueIndex: uniqueIndex("title_unique").on(
+    uniqueFeedbackTitleIndex: uniqueIndex("unique_feedback_title").on(
       feedback.title,
-      feedback.authorId,
     ),
     userIdIndex: index("prompts_user_id_idx").on(feedback.authorId),
   }),

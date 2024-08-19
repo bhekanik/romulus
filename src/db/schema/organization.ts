@@ -36,8 +36,7 @@ export const organization = pgTable(
       .notNull(),
   },
   (feedback) => ({
-    uniqueIndex: uniqueIndex("name_unique").on(feedback.name),
-    userIdIndex: index("prompts_user_id_idx").on(feedback.creatorId),
+    uniqueIndex: uniqueIndex("unique_organization_name").on(feedback.name),
   }),
 );
 

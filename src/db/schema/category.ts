@@ -19,7 +19,7 @@ export const category = pgTable(
       .notNull(),
   },
   (categories) => ({
-    uniqueIndex: uniqueIndex("title_unique").on(categories.title),
+    uniqueIndex: uniqueIndex("unique_category_title").on(categories.title),
   }),
 );
 

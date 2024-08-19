@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "env": "doppler setup -c dev -p romulus",
+    "dev": "doppler run -- next dev",
     "build": "next build",
     "start": "next start",
+    "db:generate": "doppler run -- drizzle-kit generate",
+    "db:drop": "doppler run -- drizzle-kit drop",
+    "db:studio": "doppler run -- drizzle-kit studio",
+    "db:migrate": "NODE_ENV=development doppler run -- drizzle-kit migrate",
+    "db:migrate:prd": "NODE_ENV=production doppler run -c prd -- drizzle-kit migrate",
+    "db:migrate:stg": "NODE_ENV=production doppler run -c stg -- drizzle-kit migrate",
     "lint": "next lint"
   },
   "dependencies": {
